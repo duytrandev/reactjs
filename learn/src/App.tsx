@@ -1,8 +1,11 @@
-import Game from './caro/Game'
+// import Game from './caro/Game'
+
+import Card from "./components/card/Card"
 
 function App() {
   return (
-    <Game></Game>
+    // <Game></Game>
+    <Card></Card>
   )
 }
 

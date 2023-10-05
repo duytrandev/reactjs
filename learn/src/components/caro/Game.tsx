@@ -8,16 +8,9 @@ let idInterval: number
 const Game: React.FC = () => {
   const [board, setBoard] = useState<string[]>(Array(9).fill(null))
   const [xIsNext, setXIsNext] = useState<boolean>(true)
-  const [countDown, setCountDown] = useState<number>(60)
-
+  // const [win, setWin] = useState(false)
+  console.log('re render', board)
   const winner = selectWinner(board)
-  if (winner) {
-    idInterval = setInterval((): void => {
-      setCountDown((prev) => {
-        return prev - 1
-      })
-    }, 600)
-  }
 
   const handleClick = (index: number) => {
     if (winner || board[index]) return
@@ -35,7 +28,7 @@ const Game: React.FC = () => {
   return (
     <div className='game'>
       <Board board={board} handleClick={handleClick} />
-      <p>{countDown}</p>
+      {/* <p>{countDown}</p> */}
       <ButtonReset handleReset={handleReset} />
     </div>
   )
