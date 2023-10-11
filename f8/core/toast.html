@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://kit.fontawesome.com/0410128368.js"
+      crossorigin="anonymous"></script>
+  </head>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    body {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Helvetica Neue';
+      background-color: #f4f4f5;
+    }
+    body > div {
+      margin: auto;
+    }
+    #toast {
+      position: fixed;
+      top: 0;
+      right: 0;
+      margin: 32px 32px 0 0;
+    }
+    .toast {
+      display: flex;
+      max-width: 500px;
+      min-width: 400px;
+      background-color: #fff;
+      align-items: center;
+      border-left: 4px solid;
+      padding: 20px 0;
+      box-shadow: 0 5px 8px rgb(0, 0, 0, 0.08);
+      font-size: 20px;
+    }
+    @keyframes showNoti {
+      from {
+        opacity: 0.5;
+        transform: translateX(calc(100% + 32px));
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    @keyframes fadeNoti {
+      to {
+        opacity: 0;
+      }
+    }
+    .toast + .toast {
+      margin-top: 20px;
+    }
+    .toast__icon {
+      font-size: 18px;
+    }
+    .toast__close {
+      cursor: pointer;
+    }
+    .toast__close:hover {
+      color: #888;
+    }
+    .toast__icon,
+    .toast__close {
+      padding: 0 16px;
+    }
+    .toast__body {
+      flex-grow: 1;
+    }
+    .toast__title {
+      font-size: 20px;
+    }
+    .toast__message {
+      font-size: 16px;
+      color: #888;
+      margin-top: 4px;
+    }
+    .toast--success {
+      border-color: green;
+    }
+    .toast--success .toast__icon {
+      color: green;
+    }
+    .toast--info {
+      border-color: orange;
+    }
+    .toast--info .toast__icon {
+      color: orange;
+    }
+    .toast--error {
+      border-color: red;
+    }
+    .toast--error .toast__icon {
+      color: red;
+    }
+    .btn {
+      display: none;
+      border-radius: 30px;
+      font-size: 25px;
+      color: #fff;
+      padding: 10px 25px;
+    }
+    .btn:hover {
+      opacity: 0.5;
+      cursor: pointer;
+    }
+    .btn + .btn {
+      margin-left: 20px;
+    }
+    .btn--success {
+      background-color: green;
+    }
+    .btn--info {
+      background-color: orange;
+    }
+    .btn--error {
+      background-color: red;
+    }
+  </style>
+  <body>
+    <div id="toast">
+      <!-- <div class="toast toast--info">
+        <div class="toast__icon"><i class="fa-solid fa-circle-info"></i></div>
+        <div class="toast__body">
+          <div class="toast__title">Success</div>
+          <div class="toast__message">123123213123</div>
+        </div>
+        <div class="toast__close"><i class="fa-solid fa-xmark"></i></div>
+      </div>
+      
+      <div class="toast toast--error">
+        <div class="toast__icon">
+          <i class="fa-solid fa-circle-exclamation"></i>
+        </div>
+        <div class="toast__body">
+          <div class="toast__title">Success</div>
+          <div class="toast__message">123123213123</div>
+        </div>
+        <div class="toast__close"><i class="fa-solid fa-xmark"></i></div>
+      </div> -->
+    </div>
+    <div>
+      <div class="btn btn--success" onclick="showSuccess()">Show success</div>
+      <div class="btn btn--info" onclick="showInfo()">Show info</div>
+      <div class="btn btn--error" onclick="showError()">Show error</div>
+    </div>
+  </body>
+  <script>
+    function toast({
+      title = '',
+      message = '',
+      type = 'info',
+      duration = 1000
+    }) {
+      const main = document.getElementById('toast');
+      const icon = {
+        success: 'fa-solid fa-circle-check',
+        info: 'fa-solid fa-circle-info',
+        error: 'fa-solid fa-circle-exclamation'
+      };
+      if (main) {
+        const toast = document.createElement('div');
+        toast.classList.add('toast', `toast--${type}`);
+        toast.style.animation = `showNoti ease 0.5s, fadeNoti 5s linear ${
+          (duration - 5000) / 1000
+        }s forwards`;
+        toast.innerHTML = `
+        <div class="toast__icon">
+            <i class="${icon[type]}"></i>
+          </div>
+          <div class="toast__body">
+            <div class="toast__title">${title}</div>
+            <div class="toast__message">${message}</div>
+          </div>
+          <div class="toast__close">
+            <i class="fa-solid fa-xmark"></i>
+          </div>`;
+        main.appendChild(toast);
+        const timeoutId = setTimeout(() => {
+          main.removeChild(toast);
+        }, duration);
+        toast.onclick = function (e) {
+          if (e.target.closest('.toast__close')) {
+            main.removeChild(toast);
+            clearInterval(timeoutId);
+          }
+        };
+      }
+    }
+
+    function showSuccess() {
+      toast({
+        title: 'Success',
+        message: 'abc abc ahasj asd as das d',
+        type: 'success',
+        duration: 5000
+      });
+    }
+    function showInfo() {
+      toast({
+        title: 'Info',
+        message: 'abc abc ahasj asd as das d',
+        type: 'info',
+        duration: 8000
+      });
+    }
+    function showError() {
+      toast({
+        title: 'Error',
+        message: 'abc abc ahasj asd as das d',
+        type: 'error',
+        duration: 11000
+      });
+    }
+  </script>
+  <script>
+    const payload = {
+      boundaries: {
+        heartrate: {
+          max: 100,
+          min: 50
+        },
+        oxygen: {
+          max: 100,
+          min: 90
+        },
+        temperature: {
+          max: 100.5,
+          min: 96
+        },
+        bloodGlucose: {
+          max: 300,
+          min: 70
+        },
+        weight: 3,
+        weightWeekly: 6,
+        bloodPressure: {
+          systolic: {
+            max: 170,
+            min: 80
+          },
+          diastolic: {
+            max: 110,
+            min: 60
+          }
+        },
+        spirometry: {
+          pef: {
+            max: 12,
+            min: 2
+          },
+          fev1: {
+            max: 6,
+            min: 1
+          }
+        },
+        respiration: {
+          max: 22,
+          min: 6
+        }
+      },
+      patientType: ['61a5d12c8c208b000871aa1a'],
+      medicareInsuranceInfo: [],
+      healthCareDesignees: [
+        {
+          name: 'Haha',
+          relationship: 'Spouse',
+          phoneNumber: '(123) 142-5656',
+          contactType: 'Caregiver',
+          email: '',
+          authorization: true
+        }
+      ],
+      pcp: {
+        name: 'provider device',
+        phoneNumber: '(112) 334-2534',
+        authorization: false,
+        email: ''
+      },
+      covid: {},
+      username: 'addnewpatient',
+      password: 'Evizi#123!',
+      availability: [],
+      roles: ['606af27d339d88275cd0c7e8'],
+      yearsOfExperience: '',
+      specialty: '',
+      professionalDegree: '',
+      preferredMethodOfContact: 'Mobile Phone',
+      timezone: 'America/Los_Angeles',
+      displayLanguage: 'en',
+      phone: [
+        {
+          phoneNumber: '',
+          communicationType: '',
+          availableTime: ''
+        }
+      ],
+      email: 'addnewpatient@qa.team',
+      preferredLanguage: '',
+      medicalInfo: {
+        heightFt: '4',
+        heightIn: '5'
+      },
+      dob: '2013-09-02',
+      sex: 'M',
+      gender: 'M',
+      lastName: 'new patient',
+      firstName: 'add',
+      preferredProviderId: '64cb60257297a20008db159c',
+      facilities: ['6121cbad48982a00088d8fe7'],
+      status: 'ACTIVE',
+      externalId: '',
+      middleName: '',
+      nickName: '',
+      pronoun: '',
+      notifications: {
+        email: {
+          appointmentReminder: true,
+          marketingOutreach: true,
+          strongerTogetherNetwork: true,
+          strongerTogetherProgram: true,
+          strongerTogetherRewards: true,
+          transactionalNotification: true,
+          strongerTogetherModerator: false
+        },
+        sms: true,
+        voice: true,
+        pushNotifications: true
+      },
+      optInStatus: 'OPT_IN',
+      info: '',
+      conditions: [
+        {
+          icdCode: ''
+        }
+      ],
+      allergies: [],
+      referredBy: '',
+      mrn: '',
+      careGroupMaster: '6347cc1aaf086d0009110f9e',
+      careGroup: [],
+      initialAppointmentDoctorId: '',
+      navigator: '',
+      ssn: '',
+      groups: [],
+      userPreferences: {},
+      updateScheduling: false,
+      address: [
+        {
+          line1: 'adsf asf',
+          city: 'cc',
+          postalCode: '92028',
+          line2: '',
+          stateProvince: 'AL',
+          addressType: 'SHIPPING'
+        },
+        {
+          line1: 'adsf asf',
+          city: 'cc',
+          postalCode: '92028',
+          line2: '',
+          stateProvince: 'AL',
+          addressType: 'BILLING'
+        }
+      ]
+    };
+    const payload1 = {
+      username: 'Mi_1694401512419',
+      firstName: 'Mika',
+      lastName: 'Daugherty',
+      email: 'dee23@gmail.com',
+      phone: [
+        {
+          _id: '64fe83eb2ce8b34ce84ab644',
+          phoneNumber: '400-073-4198',
+          communicationType: 'MOBILE',
+          availableTime: 'DAYTIME'
+        }
+      ],
+      roles: ['606af27d339d88275cd0c7e8'],
+      careGroup: [],
+      preferredLanguage: '',
+      displayLanguage: 'en',
+      timezone: 'America/New_York',
+      availability: [],
+      status: 'ACTIVE',
+      facilities: ['64fe80d92ce8b34ce84aa6c2'],
+      ssn: '231-31-1811',
+      preferredMethodOfContact: 'Email',
+      _id: '64fe83e82ce8b34ce84ab634',
+      race: 'white',
+      optInStatus: '',
+      mrn: '',
+      info: '',
+      picture: '',
+      otherLanguages: [],
+      medicalInfo: { heightFt: '5', heightIn: '5' },
+      dob: '1959-03-23',
+      sex: 'F',
+      externalId: '',
+      middleName: '',
+      nickName: '',
+      maritalStatus: 'M',
+      pronoun: '',
+      userPreferences: { isLegacyPatient: true },
+      address: [
+        {
+          line1: '566 Klein Gardens',
+          city: 'Walpole',
+          postalCode: '02081',
+          line2: '',
+          stateProvince: 'MA',
+          addressType: 'SHIPPING'
+        },
+        {
+          line1: '566 Klein Gardens',
+          city: 'Walpole',
+          postalCode: '02081',
+          line2: '',
+          stateProvince: 'MA',
+          addressType: 'BILLING'
+        }
+      ],
+      medicareInsuranceInfo: [],
+      navigator: {},
+      notifications: {
+        email: {
+          appointmentReminder: true,
+          marketingOutreach: true,
+          strongerTogetherNetwork: true,
+          strongerTogetherProgram: false,
+          strongerTogetherRewards: false,
+          transactionalNotification: true,
+          strongerTogetherModerator: false
+        },
+        sms: true,
+        voice: true,
+        pushNotifications: true
+      },
+      isLegacyPatient: true,
+      groups: [],
+      updateScheduling: false
+    };
+    const user = {
+      _id: '64ca2ee830231000080a9d19',
+      notifications: {
+        email: {
+          marketingOutreach: true,
+          appointmentReminder: true,
+          strongerTogetherNetwork: true,
+          strongerTogetherProgram: true,
+          strongerTogetherRewards: true,
+          transactionalNotification: true,
+          strongerTogetherModerator: false
+        },
+        sms: true,
+        pushNotifications: true,
+        voice: true
+      },
+      stn: {
+        redeemedPoints: 0,
+        availablePoints: 0,
+        totalPointsEarned: 0,
+        totalStarsEarned: 0,
+        activities: null,
+        showWelcomeBannerStatus: true,
+        status: false,
+        aboutMe: null,
+        userRole: null
+      },
+      measurement: {
+        isToggledSound: false
+      },
+      latestCreatedClaimDate: {
+        vital: null,
+        pppm: null
+      },
+      tn: {
+        histories: []
+      },
+      externalIds: [],
+      stickyNote: '',
+      roles: ['606af27d339d88275cd0c7e8'],
+      careGroup: [],
+      facilities: ['64afb9b00a7db60008a36878'],
+      timeslotsLocked: false,
+      npi: '',
+      ssn: '',
+      race: '',
+      optInStatus: '',
+      mrn: '',
+      info: '',
+      picture: '',
+      avatar: [],
+      otherLanguages: [],
+      isDeleted: false,
+      status: 'ACTIVE',
+      providerState: [],
+      reviewedVitals: [],
+      reviewedSurveys: [],
+      patientType: ['61a5d1238c208b000871aa17'],
+      pinInfo: null,
+      updatedAt: Date('2023-08-04T09:26:47.926+07:00'),
+      updatedBy: '63f719ab2bba62000815d537',
+      createdBy: '63f719ab2bba62000815d537',
+      tags: [],
+      pendingOrderId: null,
+      initialAppointmentDoctorId: '64b0bcd2eb2d1250e025e987',
+      enrollmentCounselorId: null,
+      lastTimeAssigned: null,
+      gestationalWeeks: null,
+      personas: '',
+      mergeFromPatientIds: [],
+      updatedOnboardDate: Date('2023-08-02T14:00:00.000+07:00'),
+      h2hStartDate: null,
+      rpmPlusStartDate: null,
+      valueBasedContract: false,
+      isCompleteNonConsentForm: false,
+      username: 'tiffanymccoy18@yahoo.com',
+      lastName: 'Cochran',
+      middleName: 'F',
+      firstName: 'William',
+      email: 'tiffanymccoy18@yahoo.com',
+      preferredMethodOfContact: 'Email',
+      phone: [
+        {
+          _id: '64cc61e8dba28b0008573095',
+          phoneNumber: '606-316-7369',
+          communicationType: 'HOME',
+          availableTime: ''
+        }
+      ],
+      password: '$2a$10$1hobOOAm.GLaOvmp.yD0IeWQByWxRvjeICEJ9VUkb6YNMdrvp.Igu',
+      sex: 'M',
+      gender: 'M',
+      address: [
+        {
+          location: {
+            type: 'Point',
+            coordinates: [38.3375954, -82.9716617]
+          },
+          country: 'US',
+          _id: '64cc61e8dba28b0008573099',
+          line1: '2474 State Highway 1444',
+          city: 'GRAYSON',
+          stateProvince: 'KY',
+          postalCode: '41143',
+          addressType: 'SHIPPING',
+          shopifyAddressId: '8039714226327'
+        },
+        {
+          location: {
+            type: 'Point',
+            coordinates: [38.3375954, -82.9716617]
+          },
+          country: 'US',
+          _id: '64cc61e8dba28b000857309a',
+          line1: '2474 State Highway 1444',
+          city: 'GRAYSON',
+          stateProvince: 'KY',
+          postalCode: '41143',
+          addressType: 'BILLING'
+        }
+      ],
+      dob: '1948-03-09',
+      medicareInsuranceInfo: [
+        {
+          _id: '64ccbb1e102c49d9f50b769a',
+          planType: '6188734878411d09ccd2f5c8',
+          status: true
+        },
+        {
+          _id: '64ccbb1e102c49d9f50b769b',
+          planType: '6188734878411d09ccd2f5c8',
+          status: true
+        }
+      ],
+      displayLanguage: 'en',
+      careGroupMaster: '64afd3064e8d3900085e0063',
+      patientStage: '63f3242b5c6014d6f74e749a',
+      tileStatus: {
+        patient: '6419373238c2ea0008d9fa2c'
+      },
+      lastBilledDate: [
+        {
+          date: Date('2023-08-02T17:24:40.000+07:00'),
+          cptCode: null,
+          type: null,
+          _id: '64cb5b6bf6e3320008105568',
+          billType: 'VITAL'
+        },
+        {
+          date: Date('2023-08-02T17:24:40.000+07:00'),
+          cptCode: null,
+          type: null,
+          _id: '64cb5b6cf6e3320008105570',
+          billType: 'ENCOUNTER'
+        }
+      ],
+      authorizedContacts: [],
+      shopifyUserId: '6774189195415',
+      activationDate: Date('2023-08-02T17:24:42.034+07:00'),
+      userPreferences: {
+        isLegacyPatient: true
+      },
+      pid: 1,
+      timeslots: [],
+      medications: [
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:17:42.943+07:00'),
+          stopDate: null,
+          _id: '64cb7ec6db97c500089803d5',
+          medicationId: '64cb7ec6db97c500089803d3',
+          name: 'albuterol (PROVENTIL) 2.5 mg /3 mL (0.083 %) nebulization 1',
+          dosageQty: '1',
+          dosageType: 'vial',
+          route: 'Nebulization',
+          instruction:
+            '[The details of the medication are not available because there are pending changes by a home health clinician.]',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: null,
+          prescribedBy: 'General Practice Physician'
+        },
+        {
+          frequency: 'Daily',
+          updatedAt: Date('2023-08-03T17:21:26.798+07:00'),
+          stopDate: Date('2023-08-24T00:00:00.000+07:00'),
+          _id: '64cb7fa6db97c500089803db',
+          medicationId: '606af27b339d88275cd0894d',
+          name: '8-HOUR BAYER 650MG',
+          dosageQty: '650MG',
+          dosageType: 'Tablet',
+          route: 'Oral',
+          instruction: 'Instruction',
+          refills: 1,
+          status: 'Currently Taking',
+          startDate: Date('2023-08-03T00:00:00.000+07:00'),
+          prescribedBy: 'Prescribed By:'
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:27.679+07:00'),
+          stopDate: null,
+          _id: '64cb8187db97c500089803ec',
+          medicationId: '64cb8187db97c500089803ea',
+          name: 'Calcium-Cholecalciferol, D3, 250-125 mg-unit Tab 1',
+          dosageQty: '1',
+          dosageType: 'tbl',
+          route: 'Oral',
+          instruction:
+            '[The details of the medication are not available because there are pending changes by a home health clinician.]',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: null,
+          prescribedBy: null
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:29.080+07:00'),
+          stopDate: null,
+          _id: '64cb8189db97c500089803f4',
+          medicationId: '64cb8189db97c500089803f2',
+          name: 'ipratropium-albuteroL (DUO-NEB) 0.5 mg-3 mg(2.5 mg base)/3 mL nebulizer solution 3',
+          dosageQty: '3',
+          dosageType: 'mL',
+          route: 'Nebulization',
+          instruction: 'Take 3 mL by nebulization Every 4 hours.',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: Date('2021-12-02T07:00:00.000+07:00'),
+          prescribedBy: 'HOSPITALIST PHYSICIAN'
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:30.252+07:00'),
+          stopDate: null,
+          _id: '64cb818adb97c500089803fc',
+          medicationId: '64cb818adb97c500089803fa',
+          name: 'menthol-zinc oxide (CALMOSEPTINE) 0.44-20.625 % ointment 1',
+          dosageQty: '1',
+          dosageType: 'dose',
+          route: 'Topical',
+          instruction:
+            '1 Dose by Topical route As directed as needed for Other (excoriation). after each bowel movement, diaper or dressing change  Indications: a wound',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: null,
+          prescribedBy: null
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:31.419+07:00'),
+          stopDate: null,
+          _id: '64cb818bdb97c50008980404',
+          medicationId: '64cb818bdb97c50008980402',
+          name: 'RT OXYGEN PER DELIVERY DEVICE 4',
+          dosageQty: '4',
+          dosageType: 'L/min',
+          route: null,
+          instruction:
+            '4 L/min by Nasal Cannula route RT Continuous. Indications: COPD/SOB',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: null,
+          prescribedBy: null
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:32.492+07:00'),
+          stopDate: null,
+          _id: '64cb818cdb97c5000898040c',
+          medicationId: '64cb818cdb97c5000898040a',
+          name: 'insulin aspart U-100 (NOVOLOG) 100 unit/mL injection ',
+          dosageQty: null,
+          dosageType: null,
+          route: null,
+          instruction:
+            'SCALE 2Blood Sugars:101-150 - None151-200 - 2 Units201-250 - 4 Units251-300 - 6 Units301-350 - 8 UnitsGreater than 350 - 10 Units',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: Date('2022-05-23T07:00:00.000+07:00'),
+          prescribedBy: null
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:34.743+07:00'),
+          stopDate: null,
+          _id: '64cb818edb97c50008980416',
+          medicationId: '64cb818edb97c50008980414',
+          name: 'furosemide (LASIX) 40 mg tablet 40',
+          dosageQty: '40',
+          dosageType: 'mg',
+          route: 'Oral',
+          instruction:
+            'Take 1 Tablet by mouth Once Daily. Indications: fluid in the lungs due to chronic heart failure',
+          refills: 3,
+          status: 'Currently Taking',
+          startDate: Date('2022-06-30T07:00:00.000+07:00'),
+          prescribedBy: 'NURSE PRACTITIONER NURSE PRACTITIONER'
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:35.833+07:00'),
+          stopDate: null,
+          _id: '64cb818fdb97c5000898041e',
+          medicationId: '64cb818fdb97c5000898041c',
+          name: 'sennosides-docusate sodium (SENOKOT-S) 8.6-50 mg 1',
+          dosageQty: '1',
+          dosageType: 'tbl',
+          route: 'Oral',
+          instruction:
+            'Take 1 Tablet by mouth At bedtime as needed (constipation). Indications: constipation',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: null,
+          prescribedBy: 'General Practice Physician'
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:37.193+07:00'),
+          stopDate: null,
+          _id: '64cb8191db97c50008980426',
+          medicationId: '64cb8191db97c50008980424',
+          name: 'Budesonide-Formoterol (SYMBICORT 160-4.5 MCG) 160-4.5 mcg/Actuation inhaler 2',
+          dosageQty: '2',
+          dosageType: 'puff',
+          route: 'Inhalation',
+          instruction:
+            'Take 2 Puffs by inhalation Twice a day. Indications: COPD with Chronic Bronchitis',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: Date('2022-09-27T07:00:00.000+07:00'),
+          prescribedBy: null
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:38.404+07:00'),
+          stopDate: null,
+          _id: '64cb8192db97c5000898042e',
+          medicationId: '64cb8192db97c5000898042c',
+          name: 'lactulose (CHRONULAC) 20 gram/30 mL solution 10',
+          dosageQty: '10',
+          dosageType: 'g',
+          route: 'Oral',
+          instruction: 'Take 15 mL by mouth Twice a day.',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: Date('2022-12-02T07:00:00.000+07:00'),
+          prescribedBy: 'HOSPITALIST PHYSICIAN'
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:39.529+07:00'),
+          stopDate: null,
+          _id: '64cb8193db97c50008980436',
+          medicationId: '64cb8193db97c50008980434',
+          name: 'honey 100% (MEDIHONEY) 100 % Pste paste 1',
+          dosageQty: '1',
+          dosageType: 'applicatorful',
+          route: 'Topical',
+          instruction: '1 Applicatorful by Topical route Once Daily.',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: Date('2022-12-30T07:00:00.000+07:00'),
+          prescribedBy: 'HOSPITALIST PHYSICIAN'
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:40.644+07:00'),
+          stopDate: Date('2024-05-02T07:00:00.000+07:00'),
+          _id: '64cb8194db97c5000898043e',
+          medicationId: '64cb8194db97c5000898043c',
+          name: 'tamsulosin (FLOMAX) 0.4 mg capsule 0.4',
+          dosageQty: '0.4',
+          dosageType: 'mg',
+          route: 'Oral',
+          instruction:
+            'Take 1 Capsule by mouth Once Daily. Indications: enlarged prostate',
+          refills: 3,
+          status: 'Currently Taking',
+          startDate: Date('2023-05-03T07:00:00.000+07:00'),
+          prescribedBy: 'PHYSICIAN ASSISTANT PHYSICIAN ASSISTANT'
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:41.755+07:00'),
+          stopDate: null,
+          _id: '64cb8195db97c50008980446',
+          medicationId: '64cb8195db97c50008980444',
+          name: 'acetaminophen (TYLENOL) 325 mg tablet 650',
+          dosageQty: '650',
+          dosageType: 'mg',
+          route: 'Oral',
+          instruction:
+            'Take 650 mg by mouth Every 6 hours as needed for Pain or Fever, temp greater than or equal to 100.5F.',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: null,
+          prescribedBy: null
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:42.837+07:00'),
+          stopDate: null,
+          _id: '64cb8196db97c5000898044e',
+          medicationId: '64cb8196db97c5000898044c',
+          name: 'apixaban (ELIQUIS) 5 mg tablet 5',
+          dosageQty: '5',
+          dosageType: 'mg',
+          route: 'Oral',
+          instruction: 'Take 5 mg by mouth Twice a day.',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: null,
+          prescribedBy: null
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:43.946+07:00'),
+          stopDate: null,
+          _id: '64cb8197db97c50008980456',
+          medicationId: '64cb8197db97c50008980454',
+          name: 'Famotidine (PEPCID) 40 mg tablet 20',
+          dosageQty: '20',
+          dosageType: 'mg',
+          route: 'Oral',
+          instruction: 'Take 20 mg by mouth Once Daily.',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: null,
+          prescribedBy: null
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:44.906+07:00'),
+          stopDate: null,
+          _id: '64cb8198db97c5000898045e',
+          medicationId: '64cb8198db97c5000898045c',
+          name: 'ferrous sulfate 325 mg (65 mg iron) DR tablet 325',
+          dosageQty: '325',
+          dosageType: 'mg',
+          route: 'Oral',
+          instruction: 'Take 325 mg by mouth Once Daily.',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: null,
+          prescribedBy: null
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:46.052+07:00'),
+          stopDate: null,
+          _id: '64cb819adb97c50008980466',
+          medicationId: '64cb819adb97c50008980464',
+          name: 'gabapentin (NEURONTIN) 100 mg capsule 100',
+          dosageQty: '100',
+          dosageType: 'mg',
+          route: 'Oral',
+          instruction: 'Take 100 mg by mouth Three times a day.',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: null,
+          prescribedBy: null
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:47.166+07:00'),
+          stopDate: null,
+          _id: '64cb819bdb97c5000898046e',
+          medicationId: '64cb819bdb97c5000898046c',
+          name: 'pantoprazole (PROTONIX) 40 mg DR tablet 40',
+          dosageQty: '40',
+          dosageType: 'mg',
+          route: 'Oral',
+          instruction: 'Take 40 mg by mouth Twice a day.',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: null,
+          prescribedBy: null
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:48.314+07:00'),
+          stopDate: null,
+          _id: '64cb819cdb97c50008980476',
+          medicationId: '64cb819cdb97c50008980474',
+          name: 'tiotropium bromide (SPIRIVA RESPIMAT) 1.25 mcg/actuation Mist 2',
+          dosageQty: '2',
+          dosageType: 'puff',
+          route: 'Inhalation',
+          instruction: 'Take 2 Puffs by inhalation Once Daily.',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: null,
+          prescribedBy: null
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:49.712+07:00'),
+          stopDate: null,
+          _id: '64cb819ddb97c5000898047e',
+          medicationId: '64cb819ddb97c5000898047c',
+          name: 'metoprolol (LOPRESSOR) 25 mg tablet 25',
+          dosageQty: '25',
+          dosageType: 'mg',
+          route: 'Oral',
+          instruction:
+            'Take 1 Tablet by mouth Twice a day. Indications: high blood pressure',
+          refills: 1,
+          status: 'Currently Taking',
+          startDate: Date('2023-06-14T07:00:00.000+07:00'),
+          prescribedBy: null
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:51.088+07:00'),
+          stopDate: Date('2023-06-16T07:00:00.000+07:00'),
+          _id: '64cb819fdb97c50008980486',
+          medicationId: '64cb819fdb97c50008980484',
+          name: 'erythromycin (ROMYCIN) ophthalmic ointment ',
+          dosageQty: null,
+          dosageType: null,
+          route: null,
+          instruction: 'To both eyes BID',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: Date('2023-06-14T07:00:00.000+07:00'),
+          prescribedBy: null
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:52.611+07:00'),
+          stopDate: Date('2023-06-21T07:00:00.000+07:00'),
+          _id: '64cb81a0db97c5000898048e',
+          medicationId: '64cb81a0db97c5000898048c',
+          name: 'guaiFENesin (MUCINEX) 600 mg 1200',
+          dosageQty: '1200',
+          dosageType: 'mg',
+          route: 'Oral',
+          instruction: 'Take 2 Tabs by mouth Twice a day for 7 days.',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: Date('2023-06-14T07:00:00.000+07:00'),
+          prescribedBy: null
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:54.068+07:00'),
+          stopDate: null,
+          _id: '64cb81a2db97c50008980496',
+          medicationId: '64cb81a2db97c50008980494',
+          name: 'insulin detemir U-100 (LEVEMIR U-100 INSULIN) 100 unit/mL injection 20',
+          dosageQty: '20',
+          dosageType: 'U',
+          route: 'Subcutaneous',
+          instruction:
+            'Administer 20 Units subcutaneously At bedtime. Indications: type 2 diabetes mellitus',
+          refills: 0,
+          status: 'Currently Taking',
+          startDate: Date('2023-06-14T07:00:00.000+07:00'),
+          prescribedBy: null
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:56.208+07:00'),
+          stopDate: Date('2023-06-14T07:00:00.000+07:00'),
+          _id: '64cb81a4db97c500089804a1',
+          medicationId: '64cb81a4db97c5000898049f',
+          name: 'oxybutynin chloride (DITROPAN XL) 15 mg ER tablet 15',
+          dosageQty: '15',
+          dosageType: 'mg',
+          route: 'Oral',
+          instruction: 'Take 1 Tablet by mouth Once Daily.',
+          refills: 3,
+          status: 'No Longer Taking',
+          startDate: Date('2022-08-05T07:00:00.000+07:00'),
+          prescribedBy: 'HOSPITALIST PHYSICIAN'
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:57.345+07:00'),
+          stopDate: Date('2023-06-07T07:00:00.000+07:00'),
+          _id: '64cb81a5db97c500089804a9',
+          medicationId: '64cb81a5db97c500089804a7',
+          name: 'clotrimazole 1 % Oint 1',
+          dosageQty: '1',
+          dosageType: '[drp]',
+          route: 'Apply externally',
+          instruction:
+            '1 Drop by Apply externally route Twice a day. Apply twice daily to tip of penis after catheter care.',
+          refills: 2,
+          status: 'No Longer Taking',
+          startDate: Date('2022-09-01T07:00:00.000+07:00'),
+          prescribedBy: 'NURSE PRACTITIONER NURSE PRACTITIONER'
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:29:59.550+07:00'),
+          stopDate: Date('2023-06-07T07:00:00.000+07:00'),
+          _id: '64cb81a7db97c500089804b4',
+          medicationId: '64cb81a7db97c500089804b2',
+          name: 'trimethoprim-polymyxin b (POLYTRIM) ophthalmic soln 1',
+          dosageQty: '1',
+          dosageType: '[drp]',
+          route: null,
+          instruction: 'Instill 1 Drop in left eye Every 6 hours for 10 days.',
+          refills: 0,
+          status: 'No Longer Taking',
+          startDate: Date('2023-04-30T07:00:00.000+07:00'),
+          prescribedBy: 'NURSE PRACTITIONER NURSE PRACTITIONER'
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:30:00.548+07:00'),
+          stopDate: Date('2023-06-07T07:00:00.000+07:00'),
+          _id: '64cb81a8db97c500089804bc',
+          medicationId: '64cb81a8db97c500089804ba',
+          name: 'levoFLOXacin (LEVAQUIN) 750 mg tablet 750',
+          dosageQty: '750',
+          dosageType: 'mg',
+          route: 'Oral',
+          instruction: 'Take 1 Tablet by mouth Once Daily for 10 days.',
+          refills: 0,
+          status: 'No Longer Taking',
+          startDate: Date('2023-04-30T07:00:00.000+07:00'),
+          prescribedBy: null
+        },
+        {
+          frequency: null,
+          updatedAt: Date('2023-08-03T17:30:01.708+07:00'),
+          stopDate: Date('2023-06-07T07:00:00.000+07:00'),
+          _id: '64cb81a9db97c500089804c4',
+          medicationId: '64cb81a9db97c500089804c2',
+          name: 'fluconazole (DIFLUCAN) 100 mg tablet 100',
+          dosageQty: '100',
+          dosageType: 'mg',
+          route: 'Oral',
+          instruction:
+            'Take 1 Tablet by mouth Once Daily for 7 days. Do not start until after the Levaquin has been completed.',
+          refills: 0,
+          status: 'No Longer Taking',
+          startDate: Date('2023-05-04T07:00:00.000+07:00'),
+          prescribedBy: null
+        }
+      ],
+      patientMedicalHistory: [],
+      familyMedicalHistory: [],
+      products: [],
+      conditions: [],
+      allergies: [],
+      conversations: [],
+      biometric: [],
+      patientTypePrograms: [
+        {
+          patientTypeId: '61a5d1238c208b000871aa17',
+          startDate: Date('2023-08-02T17:24:40.000+07:00'),
+          endDate: null
+        }
+      ],
+      covid: {
+        vaccinationStatus: null,
+        dateOfLastCovidVaccination: ''
+      },
+      elation: {
+        patientUrl: ''
+      },
+      empStatus: '',
+      externalId: '',
+      maritalStatus: '',
+      medicalInfo: {
+        weight: '196.6',
+        heightFt: '6',
+        heightIn: '3'
+      },
+      nickName: '',
+      preferredLanguage: '',
+      pronoun: '',
+      reasonCode: null,
+      referredBy: '',
+      timezone: 'America/New_York'
+    };
+    const res1 = {
+      _id: '64fe831a2ce8b34ce84ab3a9',
+      stn: {
+        redeemedPoints: 0,
+        availablePoints: 0,
+        totalPointsEarned: 0,
+        totalStarsEarned: 0,
+        activities: null,
+        showWelcomeBannerStatus: true,
+        status: false,
+        aboutMe: null,
+        userRole: null
+      },
+      measurement: {
+        isToggledSound: false
+      },
+      latestCreatedClaimDate: {
+        vital: null,
+        pppm: null
+      },
+      externalIds: [
+        {
+          syntheticMass: '0f235c70-d4a8-4a79-e124-eb3b6da274a0'
+        }
+      ],
+      stickyNote: '',
+      roles: [
+        {
+          _id: '606af27d339d88275cd0c7e8',
+          name: 'Patient',
+          userType: 'Patient',
+          isAdministrator: false
+        }
+      ],
+      careGroup: [],
+      facilities: ['64fe80e52ce8b34ce84aa91e'],
+      timeslotsLocked: false,
+      npi: '',
+      ssn: '231-41-7531',
+      race: 'white',
+      optInStatus: '',
+      mrn: '',
+      info: '',
+      picture: '',
+      avatar: [],
+      otherLanguages: [],
+      isDeleted: false,
+      status: 'ACTIVE',
+      providerState: [],
+      reviewedVitals: [],
+      patientType: [],
+      pinInfo: null,
+      updatedAt: '2023-09-11T03:01:48.444Z',
+      updatedBy: null,
+      createdBy: null,
+      tags: [],
+      pendingOrderId: null,
+      initialAppointmentDoctorId: null,
+      enrollmentCounselorId: null,
+      lastTimeAssigned: null,
+      gestationalWeeks: null,
+      personas: '',
+      mergeFromPatientIds: [],
+      updatedOnboardDate: null,
+      h2hStartDate: null,
+      rpmPlusStartDate: null,
+      valueBasedContract: false,
+      isCompleteNonConsentForm: false,
+      yearsOfExperience: '',
+      specialty: '',
+      professionalDegree: '',
+      preferredMethodOfContact: 'Email',
+      timezone: 'America/New_York',
+      displayLanguage: 'en',
+      phone: [
+        {
+          _id: '64fe831d2ce8b34ce84ab3b9',
+          phoneNumber: '500-688-0478',
+          communicationType: 'MOBILE',
+          availableTime: 'DAYTIME'
+        }
+      ],
+      email: 'hipolito_pouros@yahoo.com',
+      preferredLanguage: '',
+      medicalInfo: {
+        heightFt: '5',
+        heightIn: '5'
+      },
+      dob: '1992-01-05',
+      sex: 'F',
+      lastName: 'Fay',
+      firstName: 'Dovie',
+      username: 'Do_1694401306585',
+      externalId: '',
+      middleName: '',
+      nickName: '',
+      maritalStatus: 'M',
+      pronoun: '',
+      userPreferences: {
+        isLegacyPatient: true
+      },
+      address: [
+        {
+          location: {
+            type: 'Point',
+            coordinates: [42.0526282, -72.5559746]
+          },
+          country: 'US',
+          _id: '64fe831d2ce8b34ce84ab3ba',
+          line1: '194 Muller Mill Suite 76',
+          city: 'Longmeadow',
+          postalCode: '01106',
+          line2: '',
+          stateProvince: 'MA',
+          addressType: 'SHIPPING'
+        },
+        {
+          location: {
+            type: 'Point',
+            coordinates: [42.0526282, -72.5559746]
+          },
+          country: 'US',
+          _id: '64fe831d2ce8b34ce84ab3bb',
+          line1: '194 Muller Mill Suite 76',
+          city: 'Longmeadow',
+          postalCode: '01106',
+          line2: '',
+          stateProvince: 'MA',
+          addressType: 'BILLING'
+        }
+      ],
+      careGroupMaster: null,
+      patientStage: '63f3242b5c6014d6f74e749a',
+      tileStatus: {
+        patient: '6419373238c2ea0008d9fa2c'
+      },
+      lastBilledDate: [
+        {
+          billType: 'VITAL',
+          date: '2023-09-11T03:01:46.000Z'
+        },
+        {
+          billType: 'ENCOUNTER',
+          date: '2023-09-11T03:01:46.000Z'
+        }
+      ],
+      shopifyUserId: '6828611174551',
+      authorizedContacts: [],
+      activationDate: '2023-09-11T03:01:48.444Z',
+      pid: 1,
+      timeslots: [],
+      medications: [],
+      patientMedicalHistory: [],
+      familyMedicalHistory: [],
+      products: [],
+      conditions: [],
+      allergies: [],
+      medicareInsuranceInfo: [],
+      conversations: [],
+      biometric: [],
+      patientTypePrograms: [],
+      badKPM: true,
+      userType: ['Patient'],
+      availability: [],
+      startWorkTime: '00:00',
+      endWorkTime: '23:30',
+      initialAppointmentDoctorName: '',
+      navigator: {},
+      notifications: {
+        sms: true,
+        voice: true,
+        pushNotifications: true,
+        email: {
+          marketingOutreach: true,
+          appointmentReminder: true,
+          strongerTogetherNetwork: true,
+          strongerTogetherProgram: false,
+          strongerTogetherRewards: false,
+          transactionalNotification: true
+        }
+      }
+    };
+
+    const res2 = {
+      _id: '64fe83222ce8b34ce84ab3c1',
+      stn: {
+        redeemedPoints: 0,
+        availablePoints: 0,
+        totalPointsEarned: 0,
+        totalStarsEarned: 0,
+        activities: null,
+        showWelcomeBannerStatus: true,
+        status: false,
+        aboutMe: null,
+        userRole: null
+      },
+      measurement: {
+        isToggledSound: false
+      },
+      latestCreatedClaimDate: {
+        vital: null,
+        pppm: null
+      },
+      externalIds: [
+        {
+          syntheticMass: 'e15d5c46-48a2-2364-2b4f-529ecbe0c956'
+        }
+      ],
+      stickyNote: '',
+      roles: [
+        {
+          _id: '606af27d339d88275cd0c7e8',
+          name: 'Patient',
+          userType: 'Patient',
+          isAdministrator: false
+        }
+      ],
+      careGroup: [],
+      facilities: ['64fe80c02ce8b34ce84aa1e2'],
+      timeslotsLocked: false,
+      npi: '',
+      ssn: '231-81-3653',
+      race: 'white',
+      optInStatus: '',
+      mrn: '',
+      info: '',
+      picture: '',
+      avatar: [],
+      otherLanguages: [],
+      isDeleted: false,
+      status: 'ACTIVE',
+      providerState: [],
+      reviewedVitals: [],
+      patientType: [],
+      pinInfo: null,
+      updatedAt: '2023-09-11T03:01:56.547Z',
+      updatedBy: null,
+      createdBy: null,
+      tags: [],
+      pendingOrderId: null,
+      initialAppointmentDoctorId: null,
+      enrollmentCounselorId: null,
+      lastTimeAssigned: null,
+      gestationalWeeks: null,
+      personas: '',
+      mergeFromPatientIds: [],
+      updatedOnboardDate: null,
+      h2hStartDate: null,
+      rpmPlusStartDate: null,
+      valueBasedContract: false,
+      isCompleteNonConsentForm: false,
+      yearsOfExperience: '',
+      specialty: '',
+      professionalDegree: '',
+      preferredMethodOfContact: 'Email',
+      timezone: 'America/New_York',
+      displayLanguage: 'en',
+      phone: [
+        {
+          _id: '64fe83252ce8b34ce84ab3d1',
+          phoneNumber: '697-616-9423',
+          communicationType: 'MOBILE',
+          availableTime: 'DAYTIME'
+        }
+      ],
+      email: 'evelyn_hammes51@gmail.com',
+      preferredLanguage: '',
+      medicalInfo: {
+        heightFt: '5',
+        heightIn: '5'
+      },
+      dob: '1970-12-26',
+      sex: 'M',
+      lastName: 'Hudson',
+      firstName: 'Edison',
+      username: 'Ed_1694401314704',
+      externalId: '',
+      middleName: '',
+      nickName: '',
+      maritalStatus: 'S',
+      pronoun: '',
+      userPreferences: {
+        isLegacyPatient: true
+      },
+      address: [
+        {
+          location: {
+            type: 'Point',
+            coordinates: [41.7454977, -70.58598669999999]
+          },
+          country: 'US',
+          _id: '64fe83252ce8b34ce84ab3d2',
+          line1: '946 Reichert Arcade Suite 67',
+          city: 'Bourne',
+          postalCode: '02532',
+          line2: '',
+          stateProvince: 'MA',
+          addressType: 'SHIPPING'
+        },
+        {
+          location: {
+            type: 'Point',
+            coordinates: [41.7454977, -70.58598669999999]
+          },
+          country: 'US',
+          _id: '64fe83252ce8b34ce84ab3d3',
+          line1: '946 Reichert Arcade Suite 67',
+          city: 'Bourne',
+          postalCode: '02532',
+          line2: '',
+          stateProvince: 'MA',
+          addressType: 'BILLING'
+        }
+      ],
+      careGroupMaster: null,
+      patientStage: '63f3242b5c6014d6f74e749a',
+      tileStatus: {
+        patient: '6419373238c2ea0008d9fa2c'
+      },
+      lastBilledDate: [
+        {
+          billType: 'VITAL',
+          date: '2023-09-11T03:01:54.000Z'
+        },
+        {
+          billType: 'ENCOUNTER',
+          date: '2023-09-11T03:01:54.000Z'
+        }
+      ],
+      shopifyUserId: '6828611240087',
+      authorizedContacts: [],
+      activationDate: '2023-09-11T03:01:56.547Z',
+      pid: 1,
+      timeslots: [],
+      medications: [],
+      patientMedicalHistory: [],
+      familyMedicalHistory: [],
+      products: [],
+      conditions: [],
+      allergies: [],
+      medicareInsuranceInfo: [],
+      conversations: [],
+      biometric: [],
+      patientTypePrograms: [],
+      badKPM: true,
+      userType: ['Patient'],
+      availability: [],
+      startWorkTime: '00:00',
+      endWorkTime: '23:30',
+      initialAppointmentDoctorName: '',
+      navigator: {},
+      notifications: {
+        sms: true,
+        voice: true,
+        pushNotifications: true,
+        email: {
+          marketingOutreach: true,
+          appointmentReminder: true,
+          strongerTogetherNetwork: true,
+          strongerTogetherProgram: false,
+          strongerTogetherRewards: false,
+          transactionalNotification: true
+        }
+      }
+    };
+
+    const payloadAdd = Object.keys(payload);
+    const payloadUpdate = Object.keys(payload1);
+    const userKeys = Object.keys(user);
+    const resKeys1 = Object.keys(res1);
+    const resKeys2 = Object.keys(res2);
+
+    console.log({
+      user: userKeys.length,
+      payloadAdd: payloadAdd.length,
+      payloadUpdate: payloadUpdate.length,
+      res1: resKeys1.length,
+      res2: resKeys2.length
+    });
+    const checkdiff = (a, b) => {
+      console.log(a.filter((e) => !b.includes(e)));
+    };
+    console.log(resKeys1);
+    checkdiff(resKeys1, payloadAdd);
+    checkdiff(payloadAdd, resKeys2);
+
+    // console.log(diff1);
+    // console.log(diff2);
+    // console.log(
+    //   'a',
+    //   resNorUser.map((e) => {
+    //     return {
+    //       [e]: res1.user[e]
+    //     };
+    //   })
+    // );
+    // console.log(diff4);
+    // const diff5 = payloadKeys.filter((e) => !payloadKeys1.includes(e));
+    // console.log(diff5);
+    // console.log(
+    //   payloadDiff1.map((e) => {
+    //     return {
+    //       [e]: payload[e]
+    //     };
+    //   })
+    // );
+    // console.log(
+    //   payloadDiff2.map((e) => {
+    //     return {
+    //       [e]: payload1[e]
+    //     };
+    //   })
+    // );
+    // console.log(
+    //   payloadSame.map((e) => {
+    //     return {
+    //       [e]: payload1[e]
+    //     };
+    //   })
+    // );
+
+    // const diff2res1 = resKeys1.filter((e) => !resKeys2.includes(e));
+    // const diff2res2 = resKeys2.filter((e) => !resKeys1.includes(e));
+    // console.log(diff2res1, diff2res2);
+    // console.log(res2.user['availability']);
+  </script>
+</html>

@@ -1,0 +1,44 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 9px;
+
+  &:hover {
+    background: rgba(22, 24, 35, .06);
+    ;
+  }
+
+  &:first-child {
+    margin-top: 10px;
+  }
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+.content {
+  flex: 1;
+  color: #161823;
+  font-weight: 600;
+  font-size: 1.8rem;
+  margin: 0 8px;
+  text-overflow: "hidden";
+}
+
+.wrapper-icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-default {
+  width: 7px;
+  height: 7px;
+  background-color: #888;
+  border-radius: 50%;
+}

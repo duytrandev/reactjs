@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>concat</title>
+    <script
+      src="https://kit.fontawesome.com/0410128368.js"
+      crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./assets/css/base.css" />
+    <link rel="stylesheet" href="./assets/css/main.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <div class="grid">
+          <nav class="header__nav">
+            <ul class="header__list">
+              <li class="header__item header__item-padding">
+                Vào cửa hàng trên ứng dụng
+                <div class="header__qrcode">
+                  <img src="assets/img/catmeme.jpg" alt="" class="qrcode" />
+                </div>
+              </li>
+              <li class="header__item header__item--pivot">
+                <span class="disable-hover">Kết nối</span>
+              </li>
+              <a href="" class="header__link navbar__item-icon">
+                <i class="fa-brands fa-square-instagram"></i>
+              </a>
+              <a href="" class="header__link navbar__item-icon">
+                <i class="fa-brands fa-facebook"></i>
+              </a>
+            </ul>
+            <ul class="header__list">
+              <li class="header__item header__item-padding">
+                <i class="fa-solid fa-bell"></i>
+                <span>Thông báo</span>
+                <div class="notification">
+                  <header class="notification__header">
+                    <h3>Thông báo mới nhận</h3>
+                  </header>
+                  <ul class="notification__list">
+                    <li class="notification__item notification__item--viewed">
+                      <a href="" class="notification__link">
+                        <img
+                          src="assets/img/cat-item.jpeg"
+                          alt=""
+                          class="notification__image" />
+                        <div class="notification__info">
+                          <p class="notification__item-name">
+                            Con meo 21 1 1 312 312 3123 12 31 31 1 123213 12312
+                            312 312 3123123123 123 123 12321 312 3123 123 123
+                            123 123 123
+                          </p>
+                          <p class="notification__item-description">
+                            description co 132`1 12123 123 213 213 1 123123 123
+                            123 123 213123 123 123 123 12312 3123 123 1231223 1
+                          </p>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="notification__item">
+                      <a href="" class="notification__link">
+                        <img
+                          src="assets/img/cat-item.jpeg"
+                          alt=""
+                          class="notification__image" />
+                        <div class="notification__info">
+                          <p class="notification__item-name">
+                            Con meo 21 1 1 312 312 3123 12 31 31 1
+                          </p>
+                          <p class="notification__item-description">
+                            description co 132`1 12123 123 213 213 123 1
+                          </p>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="notification__item notification__item--viewed">
+                      <a href="" class="notification__link">
+                        <img
+                          src="assets/img/cat-item.jpeg"
+                          alt=""
+                          class="notification__image" />
+                        <div class="notification__info">
+                          <p class="notification__item-name">
+                            Con meo 21 1 1 312 312 3123 12 31 31 1
+                          </p>
+                          <p class="notification__item-description">
+                            description co 132`1 12123 123 213 213 123 1
+                          </p>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                  <div class="notification__footer">
+                    <span>Xem tất cả</span>
+                  </div>
+                </div>
+              </li>
+              <li class="header__item">
+                <a href="#" class="header__link"
+                  ><i class="fa-solid fa-circle-info"></i>
+                  <span>Trợ giúp</span>
+                </a>
+              </li>
+              <li class="header__item header__item--bold">Đăng kí</li>
+              <li class="header__item header__item--bold header__item--pivot">
+                Đăng nhập
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      <div class="container"></div>
+      <footer class="footer"></footer>
+    </div>
+
+    <div class="modal">
+      <div class="modal__overlay"></div>
+      <div class="modal__body">
+        <div class="auth">
+          <div class="auth__container">
+            <div class="auth__heading">
+              <span class="auth__heading--login">Đăng nhập</span>
+              <span class="auth__heading--register">Đăng kí</span>
+            </div>
+            <form action="" class="auth__form" autocomplete="off">
+              <input
+                type="text"
+                class="auth__form--input"
+                placeholder="Email/Số điện thoại/Tên đăng nhập"
+                autocomplete="off" />
+              <input
+                type="password"
+                class="auth__form--input"
+                placeholder="Mật khẩu"
+                autocomplete="off" />
+            </form>
+            <div class="auth__item">
+              <a href="" class="auth__helper"
+                ><span class="auth__forgot">Quên mật khẩu</span></a
+              >
+              <a href="" class="auth__helper auth__helper--pivot"
+                ><span class="auth__help">Trợ giúp</span></a
+              >
+            </div>
+            <div class="auth__item">
+              <button class="auth__btn auth__btn--back">
+                <span>Trở lại</span>
+              </button>
+              <button class="auth__btn auth__btn--submit">
+                <span class="">Đăng nhập</span>
+              </button>
+            </div>
+          </div>
+          <div class="auth__footer">
+            <a href="" class="auth__link">
+              <i class="fa-solid fa-comment-sms"></i>
+              <span class="auth__link--text">SMS</span>
+            </a>
+            <a href="" class="auth__link">
+              <i class="fa-brands fa-facebook-f"></i>
+              <span class="auth__link--text">Facebook</span>
+            </a>
+            <a href="" class="auth__link">
+              <i class="fa-brands fa-google"></i>
+              <span class="auth__link--text">Google</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </head>
+  <style>
+    .nav {
+      display: flex;
+      background-color: aqua;
+      font-size: 25px;
+      min-height: 50px;
+      justify-content: space-between;
+    }
+    .nav-list {
+      margin: auto 10px;
+    }
+    .nav-item {
+      display: inline-block;
+      margin: 0 15px;
+    }
+    .form-container {
+      max-width: 90%;
+      padding: 20px;
+      margin: 36px auto 0 auto;
+      background-color: antiquewhite;
+    }
+    .form-row {
+      display: flex;
+      padding: 5px 0;
+      font-size: 20px;
+    }
+    .form-label {
+      min-width: 130px;
+    }
+    .form-input {
+      flex: 1;
+    }
+    .colume-layout {
+      display: flex;
+    }
+    .colume-items {
+      padding: 0 10px;
+      flex: 1;
+    }
+    .main-colume {
+      flex: 2;
+    }
+    .title-items {
+      text-align: center;
+      color: royalblue;
+    }
+    .feature-items {
+      background-color: coral;
+      margin: 0 15px;
+      flex: 1;
+    }
+    .feature-layout {
+      display: flex;
+    }
+    .feature-items:nth-child(1) {
+      background-color: aquamarine;
+    }
+  </style>
+  <body>
+    <div id="root"></div>
+
+    <!-- <script type="text/babel">
+      // const courses = [
+      //   {
+      //     name: 'course1',
+      //     score: 10,
+      //   },
+      //   {
+      //     name: 'course2',
+      //     score: 9,
+      //   },
+      //   {
+      //     name: 'course3',
+      //     score: 8,
+      //   },
+      // ];
+      // const ul = (
+      //   <ul>
+      //     {courses.map((course, index) => {
+      //       return <li key={index}>{course.name}</li>;
+      //     })}
+      //   </ul>
+      // );
+      // function PostItem() {
+      //   return (
+      //     <div className="abc">
+      //       <p className="a">a</p>
+      //       <p className="b">b</p>
+      //     </div>
+      //   );
+      // }
+      // const app = (
+      //   <div className="post-list">
+      //     <PostItem />
+      //     <PostItem />
+      //     <PostItem />
+      //     <PostItem />
+      //   </div>
+      // );
+      const newsFeeds = [
+        {
+          id: 14,
+          title: 'Tối ưu hình ảnh trên web với srcset?',
+          content:
+            'Vấn đề tối ưu hiệu năng khi sử dụng ảnh vô cùng quan trọng, nó góp phần không nhỏ trong việc cải thiện hiệu năng tổng thể của trang web.\n\n[![performace khi sử dụng ảnh với srcset (1).png](https://files.fullstack.edu.vn/f8-prod/public-images/64cb395f433de.png)](https://youtu.be/Cgn82mchbgM)\n\nLà một nhà phát triển web chuyên nghiệp, bạn hãy nắm các phương án tối ưu này để áp dụng trong những dự án sắp tới nhé.',
+          user_id: 1,
+          published_at: '2023-08-03 12:21:00',
+          is_notified: true,
+          created_at: '2023-08-03T05:22:31.000000Z',
+          updated_at: '2023-08-03T05:22:31.000000Z',
+          is_published: true,
+          user: {
+            id: 1,
+            full_name: 'Sơn Đặng',
+            username: 'son-dang',
+            is_admin: true,
+            avatar_url: '',
+            cover_url: '',
+            is_comment_blocked: false,
+            is_blocked: false,
+          },
+        },
+        {
+          id: 13,
+          title: 'Hiểu về Redux và tự code lại Redux?',
+          content:
+            'Nội dung này dành cho các bạn đã chắc *[JavaScript cơ bản](https://fullstack.edu.vn/courses/javascript-co-ban)* và đang tìm hiểu về React/React-Redux.\n\n*P/S: Nửa đêm mất ngủ.*\n\n[![](https://i3.ytimg.com/vi/GQ-toR8F7rc/maxresdefault.jpg)](https://www.youtube.com/watch?v=GQ-toR8F7rc)\n\n*Sau video này, các bạn thử làm một Todo list ứng dụng "My Redux" nhé!*',
+          user_id: 1,
+          published_at: '2023-07-05 10:53:00',
+          is_notified: true,
+          created_at: '2023-07-05T03:53:23.000000Z',
+          updated_at: '2023-07-05T03:59:28.000000Z',
+          is_published: true,
+          user: {
+            id: 1,
+            full_name: 'Sơn Đặng',
+            username: 'son-dang',
+            is_admin: true,
+            avatar_url: '',
+            cover_url: '',
+            is_comment_blocked: false,
+            is_blocked: false,
+          },
+        },
+        {
+          id: 12,
+          title: 'Tại sao #FFF lại là màu trắng?',
+          content:
+            'Có bao giờ các bạn tự hỏi hàm *RGB* sao lại dùng `0 - 255`? Hay tại sao giá trị *alpha* `0.5` trong *RGB* lại là `80` khi chuyển qua *HEX*?\n\n[![](https://i3.ytimg.com/vi/_u3xST8mzs4/maxresdefault.jpg)](https://www.youtube.com/watch?v=_u3xST8mzs4)\n\n*Các bạn muốn nghe về chủ đề gì thì comment dưới video để mình biết với nhé.*',
+          user_id: 1,
+          published_at: '2023-06-28 19:07:00',
+          is_notified: true,
+          created_at: '2023-06-28T12:08:33.000000Z',
+          updated_at: '2023-06-28T17:32:33.000000Z',
+          is_published: true,
+          user: {
+            id: 1,
+            full_name: 'Sơn Đặng',
+            username: 'son-dang',
+            is_admin: true,
+            avatar_url: '',
+            cover_url: '',
+            is_comment_blocked: false,
+            is_blocked: false,
+          },
+        },
+        {
+          id: 11,
+          title: 'Video giải thích những "phi lý" trong JS mới được publish!',
+          content:
+            'Video này không có gì cao siêu cả. Mình giải thích một cách hết sức nhẹ nhàng cho các bạn mới học JavaScript có thể dễ dàng hiểu được.\n\n[![](https://i3.ytimg.com/vi/YFhyq-CMGtY/maxresdefault.jpg)](https://www.youtube.com/watch?v=YFhyq-CMGtY)\n\n*Các bạn đã đăng ký khóa ***[Javascript Nâng cao](https://fullstack.edu.vn/courses/javascript-nang-cao)*** sẽ nhận được thông báo ra bài mới. Các bạn chỉ cần nhấn vào thông báo để xem video này.*',
+          user_id: 1,
+          published_at: '2023-06-27 16:35:00',
+          is_notified: true,
+          created_at: '2023-06-27T09:35:57.000000Z',
+          updated_at: '2023-06-27T09:36:48.000000Z',
+          is_published: true,
+          user: {
+            id: 1,
+            full_name: 'Sơn Đặng',
+            username: 'son-dang',
+            is_admin: true,
+            avatar_url: '',
+            cover_url: '',
+            is_comment_blocked: false,
+            is_blocked: false,
+          },
+        },
+        {
+          id: 10,
+          title: 'Figma mới thay update giao diện',
+          content:
+            'Figma mới update thêm tính năng bật/tắt DevMode, dẫn tới một số bạn không thấy phần code *CSS* nữa. Các bạn vui lòng làm theo hình ảnh sau để bật DevMode nhé:\n\n![image.png](https://files.fullstack.edu.vn/f8-prod/public-images/64941f7ea44e6.png)\n\nChúc các bạn học tập vui vẻ và hiệu quả!',
+          user_id: 1,
+          published_at: '2023-06-22 17:16:00',
+          is_notified: true,
+          created_at: '2023-06-22T10:16:48.000000Z',
+          updated_at: '2023-06-22T10:17:31.000000Z',
+          is_published: true,
+          user: {
+            id: 1,
+            full_name: 'Sơn Đặng',
+            username: 'son-dang',
+            is_admin: true,
+            avatar_url: '',
+            cover_url: '',
+            is_comment_blocked: false,
+            is_blocked: false,
+          },
+        },
+      ];
+
+      const NewFeedItems = ({ abc }) => {
+        const { title, content, index } = abc;
+        const user = abc.user.full_name;
+        return (
+          <ul key={index}>
+            <li className="title">{title}</li>
+            <li className="content">{content}</li>
+            <li className="user">{user}</li>
+          </ul>
+        );
+      };
+
+      const App = function () {
+        return (
+          <div id="ss">
+            {newsFeeds.map((newsFeed, index) => {
+              return <NewFeedItems key={index} abc={newsFeed} />;
+            })}
+          </div>
+        );
+      };
+      const root = document.getElementById('root');
+      const container = ReactDOM.createRoot(root);
+      container.render(<App />);
+    </script> -->
+    <!-- <div class="nav">
+      <ul class="nav-list">
+        <li class="nav-item">Giới thiệu</li>
+        <li class="nav-item">Kết nối</li>
+        <li class="nav-item">Tải ứng dụng</li>
+      </ul>
+      <ul class="nav-list">
+        <li class="nav-item">Đăng kí</li>
+        <li class="nav-item">Đăng nhập</li>
+      </ul>
+    </div>
+    <div class="form-container">
+      <form action="" class="form">
+        <div class="form-row">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-input"></input>
+        </div>
+        <div class="form-row">
+          <label for="" class="form-label">Password</label>
+          <input type="text" class="form-input"></input>
+        </div>
+      </form>
+    </div>
+    <div class="colume-layout">
+      <div class="colume-items sidebar-one">
+        <h2 class="title-items">Sidebar one</h2>
+        <p>I'm writing to you in reference to the job position advertised 
+          MyCV.vn which immediately appealed to me.Since I've been interested 
+          in your company for a long time, I would like to apply today as 
+          a Sample position in permanent employment.</p>
+      </div>
+      <div class="colume-items main-colume">
+        <h2 class="title-items">Main column</h2>
+        <p>I'm writing to you in reference to the job position 
+          advertised MyCV.vn which immediately appealed to me.
+          Since I've been interested in your company for a long time, 
+          I would like to apply today as a Sample position in permanent
+          employment.</p>
+        <p>At the moment I'm working as a Sample position at Sample 
+          company.My most important tasks include familiarizing myself 
+          with new products, conducting sales talks and transferring 
+          orders.</p>
+        <p>Your job list sounds great! I hope that this will enable me 
+          to develop personal and professional development opportunities.
+          I like your focus and image in this industry very well, so I see 
+          you as a very interesting employer.I have been following your 
+          development for a long time in the media and therefore believe 
+          that I also fit in well with the company.</p>
+      </div>
+      <div class="colume-items sidebar-two">
+        <h2 class="title-items">Sidebar two</h2>
+        <p>I'm writing to you in reference to the job position 
+          advertised MyCV.vn which immediately appealed to me.
+          Since I've been interested in your company for a long 
+          time, I would like to apply today as a Sample position 
+          in permanent employment.</p>
+      </div>
+    </div>
+    <div class="feature-layout">
+      <div class="feature-items">
+        <h2>Feature 1</h2>
+        <p>I'm writing to you in reference to the job position advertised 
+          MyCV.vn which immediately appealed to me.Since I've been interested 
+          in your company for a long time, I would like to apply today as 
+          a Sample position in permanent employment.
+        </p>
+      </div>
+      <div class="feature-items">
+        <h2>Feature 2</h2>
+        <p>At the moment I'm working as a Sample position 
+          at Sample company.My most important tasks include 
+          familiarizing myself with new products, conducting 
+          sales talks and transferring orders.
+        </p>
+      </div>
+      <div class="feature-items">
+        <h2>Feature 3</h2>
+        <p>Your job list sounds great! I hope that this will 
+          enable me to develop personal and professional development 
+          opportunities.I like your focus and image in this industry 
+          very well, so I see you as a very interesting employer.I have 
+          been following your development for a long time in the media and 
+          therefore believe that I also fit in well with the company.
+        </p>
+      </div>
+    </div> -->
+  </body>
+  <script type="text/babel">
+    function Button({ abc, b }) {
+      const pros = {};
+      if (abc) {
+        pros.abc = abc;
+        pros.x = '123';
+      }
+      return (
+        <button {...pros} className="btn" style={{ margin: '20px 50px' }}>
+          {pros.x}
+        </button>
+      );
+    }
+    function App() {
+      return <div id="wraper">{false}</div>;
+    }
+
+    const root = document.getElementById('root');
+    const container = ReactDOM.createRoot(root);
+    container.render(<App />);
+  </script>
+</html>
