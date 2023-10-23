@@ -1,8 +1,14 @@
-import Button from './styles/Button.styled';
 import { Wrapper } from './styles/Wrapper.styled';
-import { Description, Image, Logo, Nav, Wrapper as HeaderWrapper } from './styles/Header.styled';
-import logo from '../images/logo.svg'
-import c from '../images/c.svg'
+import {
+  Description,
+  Image,
+  Logo,
+  Nav,
+  Wrapper as HeaderWrapper
+} from './styles/Header.styled';
+import logo from '../images/logo.svg';
+import c from '../images/c.svg';
+import Button from './styles/Button.styled';
 
 const Header = () => {
   return (
@@ -22,7 +28,7 @@ const Header = () => {
               you engage in genuine discussion.
             </p>
 
-            <Button bg='#ff0099' color='#fff'>
+            <Button bg="#ff0099" color="#fff">
               Get Started For Free
             </Button>
           </div>

@@ -1,10 +1,10 @@
-import StyledCard from "./styles/Card.styled"
+import StyledCard from './styles/Card.styled';
 
 interface Props {
-  id: number,
-  title: string,
-  body: string,
-  image: string
+  id: number;
+  title: string;
+  body: string;
+  image: string;
 }
 const Card = ({ id, title, body, image }: Props) => {
   return (
@@ -17,7 +17,7 @@ const Card = ({ id, title, body, image }: Props) => {
         <img src={image} alt="" />
       </div>
     </StyledCard>
-  )
-}
+  );
+};
 
-export default Card
+export default Card;

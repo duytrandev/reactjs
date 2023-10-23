@@ -1,5 +1,8 @@
-import { FooterContainer, Wrapper as FooterWrapper } from "./styles/Footer.styled"
-import { Wrapper } from "./styles/Wrapper.styled"
+import {
+  FooterContainer,
+  Wrapper as FooterWrapper
+} from './styles/Footer.styled';
+import { Wrapper } from './styles/Wrapper.styled';
 const Footer = () => {
   return (
     <FooterWrapper>
@@ -28,7 +31,7 @@ const Footer = () => {
         <p>&copy; 2023 Huddle. All rights reserved</p>
       </Wrapper>
     </FooterWrapper>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
